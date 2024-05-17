@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_prac/app/data/models/task.dart';
@@ -87,13 +88,40 @@ class HomeController extends GetxController {
     return todos.any((element) => element['title'] == text);
   }
 
-  bool addToDo(String title) { 
+  bool addToDo(String title) {
     var todo = {'title': title, 'done': false};
     var doneTodo = {'title': title, 'done': true};
-    if (doingTodos.contains(todo) || doneTodos.contains(doneTodo)) {  //is my logic right?
+    if (doingTodos.contains(todo) || doneTodos.contains(doneTodo)) {
+      //is my logic right?
       return false;
     }
     doingTodos.add(todo);
     return true;
+  }
+
+  void updateToDos() {
+    var newToDOs = <Map<String, dynamic>>[];
+    newToDOs.addAll([
+      ...doingTodos,
+      ...doneTodos,
+    ]);
+    if (task.value != null) {
+      var newTask = task.value!.copyWith(todos: newToDOs);
+      int oldIndex = tasks.indexOf(task.value);
+      tasks[oldIndex] = newTask;
+      tasks.refresh();
+    }
+  }
+
+  void doneTodo(String title) {
+    var doingTodo = {'title': title, 'done': false};
+    int index = doingTodos.indexWhere(
+        (element) => mapEquals<String, dynamic>(doingTodo, element));
+    doingTodos.removeAt(index);
+
+    var doneTodo = {'title': title, 'done': true};
+    doneTodos.add(doneTodo);
+    doingTodos.refresh();
+    doneTodos.refresh();  
   }
 }

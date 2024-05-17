@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:getx_prac/app/core/utils/extension.dart';
+import 'package:getx_prac/app/modules/detail/widgets/doing_list.dart';
 import 'package:getx_prac/app/modules/home/home_controller.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
@@ -28,7 +29,9 @@ class DetailPage extends StatelessWidget {
                   IconButton(
                       onPressed: () {
                         Get.back();
+                        homeCtrl.updateToDos();
                         homeCtrl.changeTask(null);
+                        homeCtrl.editController.clear();  
                       },
                       icon: const Icon(Icons.arrow_back)),
                 ],
@@ -112,7 +115,7 @@ class DetailPage extends StatelessWidget {
                   suffixIcon: IconButton(
                     onPressed: () {
                      if( homeCtrl.formKey.currentState!.validate()){
-                      var success= homeCtrl.addTodo(homeCtrl.editController.text);
+                      var success= homeCtrl.addToDo(homeCtrl.editController.text);
                       if(success){
                         EasyLoading.showSuccess('Todo Added');
                       } 
@@ -126,13 +129,14 @@ class DetailPage extends StatelessWidget {
                   ),
                 ),
                 validator: (value) {
-                  if (value == null || value!.trim().isEmpty) {
+                  if (value == null || value.trim().isEmpty) {
                     return 'Please enter a task';
                   }
                   return null;
                 },
               ),
-            )
+            ),
+            DoingList(),
           ],
         ),
       ),
