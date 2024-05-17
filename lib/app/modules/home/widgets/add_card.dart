@@ -6,7 +6,7 @@ import 'package:getx_prac/app/core/utils/extension.dart';
 import 'package:getx_prac/app/core/values/colors.dart';
 import 'package:getx_prac/app/data/models/task.dart';
 import 'package:getx_prac/app/modules/home/home_controller.dart';
-import 'package:getx_prac/app/widgets/icons.dart';
+import 'package:getx_prac/app/modules/home/widgets/icons.dart';
 
 class AddCard extends StatelessWidget {
   final homeCtrl = Get.find<HomeController>();
