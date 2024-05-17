@@ -17,12 +17,11 @@ class TaskCard extends StatelessWidget {
     final color = HexColor.fromHex(task.color);
     final squareWidth = Get.width - 12.0.wp;
 
-    return GestureDetector
-    
-    (
-      onTap: (){
+    return GestureDetector(
+      onTap: () {
         homeCtrl.changeTask(task);
-        Get.to(() => DetailPage() );
+        homeCtrl.changeToDos(task.todos);
+        Get.to(() => DetailPage());
       },
       child: Container(
         width: squareWidth / 2,
@@ -63,20 +62,24 @@ class TaskCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding:  EdgeInsets.all(6.0.wp),
+              padding: EdgeInsets.all(6.0.wp),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     task.title,
-                    style:
-                        TextStyle(fontSize: 12.0.sp, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 12.0.sp, fontWeight: FontWeight.bold),
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: 2.0.wp,),
-                  Text('${task.todos.length ?? 0} Tasks',
-                  style: const TextStyle(fontWeight: FontWeight.bold,
-                  color: Colors.grey) ,)
+                  SizedBox(
+                    height: 2.0.wp,
+                  ),
+                  Text(
+                    '${task.todos.length ?? 0} Tasks',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.grey),
+                  )
                 ],
               ),
             )
